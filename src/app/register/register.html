@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h2 class="text-center text-primary">Register</h2>
+    <hr>
+    <div class="form-group mb-2">
+        <input 
+                type="text" class="form-control" formControlName="userName" placeholder="UserName" >
+        <div class="invalid-feedback"> Please Enter UserName </div>
+    </div>
+    <div class="form-group mb-2">
+        <input 
+                type="password" class="form-control" formControlName="password" placeholder="Password" >
+    </div>
+    <div class="form-group mb-2">
+        <input 
+                type="password" class="form-control" formControlName="confirmPassword" placeholder="ConfirmPassword" >
+    </div>
+
+    <div class="form-group mt-2 d-flex justify-content-center">
+       <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Register</button>
+       <button class="btn btn-default ml-10px" type="button" (click)="cancel()">Cancel</button>
+    </div>
+</form>
+    </div>
+</div>
+
+

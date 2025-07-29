@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: cornflowerblue;">
+   @if (!registerMode){
+     <div>
+        <h1> Welcome to Chat Room</h1>
+        <div class="text-center">
+            <button class="btn btn-primary" (click)="toggleRegisterMode()">
+                Register
+            </button>
+        </div>
+    </div>
+   }
+   @if (registerMode){
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <app-register (close)="toggleRegisterMode()"></app-register>
+            </div>
+        </div>
+    </div>
+   }
+</div>
