@@ -11,7 +11,8 @@ import { map, ReplaySubject } from 'rxjs';
 export class AccountService {
   
   model: LoginDto;
-  private baseUrl = 'https://localhost:7024/api';
+  private baseUrl = "https://localhost:7024/api";
+  //import.meta.env.NG_APP_BASE_API_URL;
   private currentUser = new ReplaySubject<UserDto>(1);
   currentUser$ = this.currentUser.asObservable();
 

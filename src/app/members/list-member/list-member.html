@@ -1,0 +1,9 @@
+<div class="album py-5" style="background-color:lightsteelblue">
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let member of members">
+                <app-card-member [member]="member"></app-card-member>
+            </div>
+        </div>
+    </div>
+</div>

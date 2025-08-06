@@ -1,0 +1,96 @@
+@if (member){
+    <div class="row">
+    <div class="col-4">
+        <h4 class="edit-member-title p-2"> Edit Profile </h4>
+    </div>
+    <div class="col-8">
+       @if (editMemberForm.dirty) {
+         <div class="alert alert-info">
+            <strong> Warning: </strong> Profile is changed, please save them
+        </div>
+       }
+    </div>
+    <div class="col-4">
+        <form [formGroup]="editMemberForm" (ngSubmit)="onSubmit()">
+            <div class="card">
+            <img src="{{member.photoUrl || '../../../../images/user.jpg'}}" alt="{{member.userName}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body custom-card">
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <strong> Country: </strong>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="text" formControlName="country" />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <strong> City: </strong>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="text" formControlName="city" />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <strong> Age: </strong>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="text" formControlName="age" />
+                    </div>
+                </div>
+                <div>
+                    <strong> Last Visit: </strong>
+                    <p class="d-inline-block mx-2">{{member.lastActive??"----"}}</p>
+                </div>
+                <div>
+                    <strong class="d-inline-block"> Created: </strong>
+                    <p class="d-inline-block mx-2">{{member.created??"----"}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button [disabled]="!editMemberForm.dirty" class="btn btn-success btn-block" type="submit"
+                    form="editForm"> Save </button>
+            </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-8">
+        <div class="card mb-5">
+            <div class="card-body p-5">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#aboutme"
+                            type="button" role="tab" aria-controls="home" aria-selected="true"> Profile </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="aboutme" role="tabpanel" aria-labelledby="home-tab">
+                        <form [formGroup]="editMemberForm" id="editForm">
+                            <div class="row my-4">
+                                <div class="col-12 mb-4">
+                                    <label class="mb-2"> Description </label>
+                                    <textarea name="introduction" [(ngModel)] = "member.introduction" class="form-control"
+                                        rows="6"></textarea>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <label class="mb-2"> Goals </label>
+                                    <textarea name="lookingFor" [(ngModel)] = "member.lookingFor" class="form-control"
+                                        rows="6"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="mb-2"> Interests </label>
+                                    <textarea name="intrests" [(ngModel)] = "member.interests" class="form-control"
+                                        rows="6">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

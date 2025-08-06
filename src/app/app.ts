@@ -1,16 +1,14 @@
-import { JsonPipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Nav } from './nav/nav';
 import { UserDto } from './DTOs/UserDto';
 import { AccountService } from './services/account-service';
-import { Register } from './register/register';
-import { Home } from './home/home';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Nav, Register, Home],
+  imports: [RouterOutlet, Nav, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -25,21 +23,11 @@ export class App implements OnInit{
     this.setCurrentUser();
   }
 
-  // getUsers(){
-  //   this.http.get("https://localhost:7024/api/users").subscribe(data => {
-  //     console.log(data);
-  //     this.users = data;
-  //   }, error => {
-  //     console.log(error)
-  //   }, () => {
-  //     console.log('done');
-  //   })
-  // }
-
 
   setCurrentUser(){
     const user: UserDto = JSON.parse(localStorage.getItem('user'));
-    this.accountService.serCurrentUser(user);
+    
+    user ? this.accountService.serCurrentUser(user) : this.accountService.serCurrentUser(null)
   }
 
 }

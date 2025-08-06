@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../services/account-service';
+import { Router } from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +20,13 @@ export class Register {
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
   });
 
-  constructor(private accountService: AccountService){}
+  constructor(private accountService: AccountService, private router:Router, private toast: ToastrService){}
 
   onSubmit(){
     this.accountService.register(this.registerForm.value).subscribe(user => {
-      console.log(user)
+      this.cancel();
+      this.router.navigateByUrl('/');
+      this.toast.success('Success', 'Register is successfully');
     }, error => {
       console.log(error)
     })
