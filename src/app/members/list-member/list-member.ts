@@ -3,6 +3,7 @@ import { MemberService } from '../../services/member-service';
 import { MemberDTO } from '../../DTOs/MemberDto';
 import { CommonModule } from '@angular/common';
 import { CardMember } from "../card-member/card-member";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-member',
@@ -12,18 +13,14 @@ import { CardMember } from "../card-member/card-member";
 })
 export class ListMember implements OnInit{
 
-  members: MemberDTO[] = [];
+  //members: MemberDTO[] = [];
+  members$ = new Observable<MemberDTO[]>();
 
   constructor(private memberService: MemberService){}
 
   ngOnInit(): void {
-    this.loadMembers();
+    this.members$ = this.memberService.getMembers();
   }
 
-  loadMembers(){
-    this.memberService.getMembers().subscribe(members => {
-      this.members = members;
-    })
-  }
 
 }

@@ -1,5 +1,5 @@
 export interface PhotoDto {
-    id: number;
+    photoId: number;
     url: string;
     isMain: boolean;
 }

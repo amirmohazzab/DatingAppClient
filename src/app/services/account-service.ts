@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { LoginDto } from '../DTOs/LoginDto';
 import { UserDto } from '../DTOs/UserDto';
 import { map, ReplaySubject } from 'rxjs';
+import { RegisterDto } from '../DTOs/RegisterDto';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,7 @@ export class AccountService {
   login(model){
     return this.http.post<UserDto>(`${this.baseUrl}/account/login`, model).pipe(map((response: UserDto ) => {
       if (response.token && response.userName){
-        localStorage.setItem('user', JSON.stringify(response));
-        this.currentUser.next(response);
+          this.serCurrentUser(response);        
       }}))
     
     }
@@ -31,17 +31,23 @@ export class AccountService {
   register(model){
     return this.http.post<UserDto>(`${this.baseUrl}/account/register`, model).pipe(map((response: UserDto ) => {
       if (response.token && response.userName){
-        localStorage.setItem('user', JSON.stringify(response));
-        this.currentUser.next(response);
+        this.serCurrentUser(response)
       }
       return response;
     }))
 
   }
 
+  isExistUserName(userName: string){
+    return this.http.get<boolean>(`${this.baseUrl}/account/isExitUserName/${userName}`,)
+  }
 
   serCurrentUser(user: UserDto){
-    this.currentUser.next(user);
+    if (user){
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUser.next(user);
+    }
+    
   }
 
   logout(){

@@ -12,8 +12,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
    return accountService.currentUser$.pipe(take(1), map((user: UserDto) => {
-      if (user)
-        return true;
+    if (user) return true;
 
     toast.error('Error', 'At first Login');
     router.navigateByUrl('/');

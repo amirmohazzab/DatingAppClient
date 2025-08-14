@@ -1,10 +1,10 @@
 import {PhotoDto} from './PhotoDto';
 
 export interface MemberDTO{
-    id: number;
+    userId: number;
     userName: string;
     email: string;
-    photoUrl: string;
+    photoUrl?: string;
     age: number;
     knownAs: string;
     created: Date;
@@ -15,5 +15,5 @@ export interface MemberDTO{
     interests: string;
     city: string;
     country: string;
-    photos: PhotoDto[];
+    photos?: PhotoDto[];
 }

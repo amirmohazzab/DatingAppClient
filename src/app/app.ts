@@ -4,11 +4,21 @@ import { Nav } from './nav/nav';
 import { UserDto } from './DTOs/UserDto';
 import { AccountService } from './services/account-service';
 import { CommonModule } from '@angular/common';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Nav, CommonModule],
+  imports: [
+    RouterOutlet, 
+    Nav, 
+    CommonModule, 
+    NgxSpinnerModule, 
+    FileUploadModule, 
+    ReactiveFormsModule, 
+    FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

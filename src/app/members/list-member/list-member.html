@@ -1,9 +1,11 @@
-<div class="album py-5" style="background-color:lightsteelblue">
+<div class="py-3" style="height:100vh">
+    <div class="album py-5" style="background-color:lightsteelblue">
     <div class="container">
         <div class="row">
-            <div *ngFor="let member of members">
+            <div *ngFor="let member of members$ | async">
                 <app-card-member [member]="member"></app-card-member>
             </div>
         </div>
     </div>
+</div>
 </div>
