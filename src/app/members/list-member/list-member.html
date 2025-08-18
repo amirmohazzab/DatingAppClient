@@ -1,11 +1,97 @@
-<div class="py-3" style="height:100vh">
+<div class="py-3" style="height:100vh; background-color:lightsteelblue">
     <div class="album py-5" style="background-color:lightsteelblue">
-    <div class="container">
-        <div class="row">
-            <div *ngFor="let member of members$ | async">
-                <app-card-member [member]="member"></app-card-member>
+        <form #form = "ngForm" (ngSubmit)="onSubmit()">
+              <div class="container">
+            <div class="row">
+               <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Min Age</span>
+                        <input value = "18" name = "minAge" [(ngModel)]="userParams.minAge" type="number" class="form-control" placeholder="MinAge">
+                    </div>
+               </div>
+               <div class="col-md-3">
+                     <div class="input-group mb-3">
+                        <span class="input-group-text">Max Age</span>
+                        <input value = "85" name= "maxAge" [(ngModel)]="userParams.maxAge" type="number" class="form-control" placeholder="MaxAge">
+                    </div>
+               </div>
+                <div class="col-md-3">
+                     <div class="input-group mb-3">
+                        <span class="input-group-text">Gender</span>
+                        <select name= "gender" [(ngModel)]="userParams.gender"
+                                type="enum" class="form-control" placeholder="Gender">
+                                <option value="0"> Male </option>
+                                <option value="1"> Femle </option>
+                        </select>
+                    </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Order By</span>
+                         <select name= "orderBy" [(ngModel)]="userParams.orderBy"
+                                 class="form-control" placeholder="OrderBy">
+                                <option value="0"> Last Active </option>
+                                <option value="1"> Created </option>
+                                <option value="2"> Age </option>
+                        </select>
+                    </div>
+               </div>
+            </div>
+             <div class="row">
+               <div class="col-md-3">
+                     <div class="input-group mb-3">
+                        <span class="input-group-text">Type Sort</span>
+                         <select name= "typeSort" [(ngModel)]="userParams.typeSort"
+                                class="form-control" placeholder="TypeSort">
+                                <option value="0"> Asc </option>
+                                <option value="1"> Desc </option>
+                        </select>
+                    </div>
+               </div>
+               <div class="col-md-3">
+                     <div class="input-group mb-3">
+                        <span class="input-group-text">Page Size</span>
+                         <select name= "pageSize" [(ngModel)]="userParams.pageSize"
+                          class="form-control" placeholder="PageSize">
+                          <option value="6"> 6 </option>
+                          <option value="10"> 10 </option>
+                           <option value="15"> 15 </option>
+                          <option value="20"> 20 </option>
+                        </select>
+                    </div>
+               </div>
+                 <div class="col-md-3">
+                    <div class="input-group mb-3">
+                       <span class="input-group-text">Search</span>
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+               </div>
+               <div class="col-md-3">
+                     <div class="input-group mb-3">
+                       <button class="btn btn-primary" type="submit"><span class="fas fa-search"></span>Search</button>
+                       <button class="btn btn-danger" (click)="onClear()"><span class="fas fa-trash"></span>Clear</button>
+                    </div>
+               </div>
             </div>
         </div>
+        </form>
+        @if (result?.items){
+            <div class="container">
+                <div class="row align-items-center">
+                    <div *ngFor="let member of result?.items" class="col-md-4">
+                        <app-card-member [member]="member"></app-card-member>
+                    </div>
+                </div>
+            </div>
+        }
+         @if (result?.items){
+            <div class="d-flex justify-content-center mt-3">
+                <pagination 
+                    (totalItems)="result?.totalCount" 
+                     [(ngModel)] ="result.currentPage" 
+                    (pageChanged)="pageChanged($event)">
+                </pagination>
+            </div>
+        }
     </div>
-</div>
 </div>

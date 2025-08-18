@@ -8,7 +8,7 @@ import { RegisterDto } from '../DTOs/RegisterDto';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })

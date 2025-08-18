@@ -1,13 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MemberDTO } from '../DTOs/MemberDto';
 import { UpdateMemberDTO } from '../DTOs/UpdateMemberDto';
-import { map, of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { PhotoDto } from '../DTOs/PhotoDto';
-import { UserDto } from '../DTOs/UserDto';
+import { PaginationResult } from '../DTOs/Pagination';
+import { UserParams } from '../DTOs/UserParams';
 
-
-const httpHeader = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(localStorage.getItem('user'))?.token);
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +17,31 @@ export class MemberService {
   private baseUrl = "https://localhost:7024/api";
   private members : MemberDTO[] = [];
   private member : MemberDTO;
+  private userParams : UserParams = new UserParams();
+  private cacheMember = new Map<string, PaginationResult<MemberDTO[]>>();
+  private paginationResult: PaginationResult<MemberDTO[]> = new PaginationResult<MemberDTO[]>();
 
   constructor(private http: HttpClient){}
 
-  getMembers(){
-    if (this.members.length > 0) return of(this.members);
-    return this.http.get<MemberDTO[]>(`${this.baseUrl}/users`).pipe(tap(members => this.members = members));
+  getMembers(userParams: UserParams) : Observable<PaginationResult<MemberDTO[]>>{
+    const key = Object.values(userParams).join('-');
+    var response = this.cacheMember.get(key);
+    if (response && response != null) return of(response);
+
+    let params = this.setParams(userParams);
+    return this.http.get<PaginationResult<MemberDTO[]>>(`${this.baseUrl}/users/getAllUsers`, {params}).pipe(map(response => {
+      this.members = response.items;
+      this.paginationResult= response;
+      this.cacheMember.set(key, response);
+      return response;
+    }))
+  
   }
 
   getMemberByUserName(userName: string){
+    let user = [...this.cacheMember].reduce((arr, [key, value]) => arr.concat(value.items), []).find(u => u.userName == userName);
+    if (user) return of(user);
+
     const member = this.members.find(m => m.userName == userName);
     if (member !== undefined) return of(member);
 
@@ -63,6 +78,35 @@ export class MemberService {
 
   getAllPhotos(userName: string){
     return this.http.get<MemberDTO>(`${this.baseUrl}/users/get-photos/${userName}`).pipe(tap(member => this.member = member));
+  }
+
+  setUserParams(userParams: UserParams){
+    this.userParams = userParams;
+  }
+
+  getUserParams(){
+    return this.userParams;
+  }
+
+  resetUserParams(){
+    this.userParams = new UserParams();
+    return this.userParams;
+  }
+
+  private setParams(userParams: UserParams){
+    let params = new HttpParams();
+    if (userParams?.pageNumber !== null && userParams?.pageSize !== null){
+
+      params = params.append('pageNumber', userParams.pageNumber.toString());
+      params = params.append('pageSize', userParams.pageSize.toString());
+      params = params.append('minAge', userParams.minAge?.toString());
+      params = params.append('maxAge', userParams.maxAge?.toString());
+      params = params.append('gender', userParams.gender?.toString());
+      params = params.append('orderBy', userParams.orderBy?.toString());
+      params = params.append('typeSort', userParams.typeSort?.toString());
+    }
+    
+    return params;
   }
 
 }

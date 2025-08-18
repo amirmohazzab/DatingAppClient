@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
@@ -18,7 +19,9 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     NgxSpinnerModule, 
     FileUploadModule, 
     ReactiveFormsModule, 
-    FormsModule],
+    FormsModule,
+    NgxPaginationModule,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

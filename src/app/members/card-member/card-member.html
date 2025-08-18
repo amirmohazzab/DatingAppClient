@@ -1,5 +1,5 @@
 @if (member){
-<div class="row col-md-4 mt-4">
+<div class="mt-4">
     <div class="card mb-4 box-shadow">
         <img
           class="img-fluid img-thumbnail shadow"
@@ -16,7 +16,7 @@
                         type="button" class="btn btn-sm btn-outline-secondary"><i class="far fa-eye"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-secondary"><i class="far fa-comment-dots"></i></button>
                 </div>
-                <small class="text-muted fw-bold">{{member.lastActive | date }}</small>
+                <small class="text-muted fw-bold">{{member.lastActive }}</small>
             </div>
         </div>
     </div>
