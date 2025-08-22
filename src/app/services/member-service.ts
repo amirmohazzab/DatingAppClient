@@ -6,6 +6,7 @@ import { map, Observable, of, tap } from 'rxjs';
 import { PhotoDto } from '../DTOs/PhotoDto';
 import { PaginationResult } from '../DTOs/Pagination';
 import { UserParams } from '../DTOs/UserParams';
+import { PredicateLikeEnum, UserLikeParams } from '../enums/likeUser';
 
 
 @Injectable({
@@ -78,6 +79,21 @@ export class MemberService {
 
   getAllPhotos(userName: string){
     return this.http.get<MemberDTO>(`${this.baseUrl}/users/get-photos/${userName}`).pipe(tap(member => this.member = member));
+  }
+
+  addLike(targetUserName: string){
+    const params = new HttpParams().append('targetUserName', targetUserName);
+
+    return this.http.post(`${this.baseUrl}/UserLikes/add-like`, {}, {params});
+  }
+
+  getUserLikes(userLikeParams: UserLikeParams){
+      let params = new HttpParams();
+      params = params.append('PageNumber', userLikeParams.pageNumber);
+      params = params.append('PageSize', userLikeParams.pageSize);
+      params = params.append('PredicateUserLike', userLikeParams.predicateUserLike.toString());
+
+      return this.http.get<PaginationResult<MemberDTO[]>>(`${this.baseUrl}/UserLikes/get-likes`, {params})
   }
 
   setUserParams(userParams: UserParams){

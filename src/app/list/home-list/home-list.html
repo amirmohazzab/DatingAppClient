@@ -1,5 +1,28 @@
-<div class="py-3" style="height: 100vh;background-color:lightsteelblue">
-    <div class="py-5">
-        <p>home-list works!</p>
+<div class="py-3" style="height:100vh; background-color:lightsteelblue">
+    <div class="album py-5" style="background-color:lightsteelblue">
+     @if (result){
+                <div class="container">
+                    <div class="row align-items-center">
+                        @for (member of result.items; track $index){
+                            <div class="col-md-4">
+                            <app-card-member [member]="member"></app-card-member>
+                        </div>
+                        }
+                    </div>
+                </div>
+            } @else {
+                <div class="alert alert-danger py-3 mt-1 text-center" role="alert">
+                    No Items To Show
+                </div>
+            }
+            @if (result){
+                <div class="d-flex justify-content-center mt-3">
+                    <pagination 
+                        (totalItems)="result?.totalCount" 
+                        [(ngModel)] ="result.currentPage" 
+                        (pageChanged)="pageChanged($event)">
+                    </pagination>
+                </div>
+            }
     </div>
 </div>

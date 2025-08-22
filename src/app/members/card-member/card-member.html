@@ -13,8 +13,15 @@
                 <div class="btn-group">
                     <button 
                         [routerLink]="['/member', member.userName]"
-                        type="button" class="btn btn-sm btn-outline-secondary"><i class="far fa-eye"></i></button>
+                        type="button" class="btn btn-sm btn-outline-secondary"><i class="far fa-eye"></i>
+                    </button>
                     <button type="button" class="btn btn-sm btn-outline-secondary"><i class="far fa-comment-dots"></i></button>
+                    <button 
+                            type="button" 
+                            (click) = "AddLike()" 
+                            class="btn btn-sm btn-outline-secondary"
+                            [ngClass]="{'text-danger' : 'Liked' }"
+                            ><i class="far fa-heart"></i></button>
                 </div>
                 <small class="text-muted fw-bold">{{member.lastActive }}</small>
             </div>
