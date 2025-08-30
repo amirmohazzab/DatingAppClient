@@ -1,101 +1,104 @@
-<div class="py-5" style="height: 100vh;">
-  <div class="card">
+<div class="py-5" >
+    <div class="container py-5" >
+       <div class="card">
     <div class="card-body">
-<form (ngSubmit)="onSubmit()" [formGroup] = "registerForm">
-    <h3 class="text-center text-primary">Register</h3>
-    <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("userName").errors && registerForm.get("userName").touched'
-                type="text" class="form-control" formControlName="userName" placeholder="UserName" >
-        @if (registerForm.get('userName').hasError('required')){
-            <div class="invalid-feedback"> Please Enter UserName </div>
-        }
-        @if (registerForm.get('userName').hasError('minlength')){
-            <div class="invalid-feedback"> UserName must not be less than 3 characters </div>
-        }
-        @if (registerForm.get('userName').hasError('maxlength')){
-            <div class="invalid-feedback"> UserName must not be more than 50 characters </div>
-        }
-    </div>
-    <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("password").errors && registerForm.get("password").touched'
-                type="password" class="form-control" formControlName="password" placeholder="Password" >
-        @if (registerForm.get('password').hasError('required')){
-            <div class="invalid-feedback"> Please Enter Password </div>
-        }
-        @if (registerForm.get('password').hasError('minlength')){
-            <div class="invalid-feedback"> Password must not be less than 5 characters </div>
-        }
-        @if (registerForm.get('password').hasError('maxlength')){
-            <div class="invalid-feedback"> Password must not be more than 20 characters </div>
-        }
-    </div>
-    <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("confirmPassword").errors && registerForm.get("confirmPassword").touched'
-                type="password" class="form-control" formControlName="confirmPassword" placeholder="ConfirmPassword" >
-         @if (registerForm.get('confirmPassword').hasError('required')){
-            <div class="invalid-feedback"> Please Enter ConfirmPassword </div>
-        }
-        @if (registerForm.get('confirmPassword').hasError('minlength')){
-            <div class="invalid-feedback"> ConfirmPassword must not be less than 4 characters </div>
-        }
-        @if (registerForm.get('confirmPassword').hasError('maxlength')){
-            <div class="invalid-feedback"> ConfirmPassword must not be more than 25 characters </div>
-        }
-         @if (registerForm.get('confirmPassword').hasError('PasswordNoMatch')){
-          <div class="invalid-feedback"> Password and ConfirmPassword are not the same </div>
-        }
-    </div>
+      <form (ngSubmit)="onSubmit()" [formGroup] = "registerForm">
+          <h3 class="text-center text-primary">Register</h3>
+          <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("userName").errors && registerForm.get("userName").touched'
+                      type="text" class="form-control" formControlName="userName" placeholder="UserName" >
+              @if (registerForm.get('userName').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter UserName </div>
+              }
+              @if (registerForm.get('userName').hasError('minlength')){
+                  <div class="invalid-feedback"> UserName must not be less than 3 characters </div>
+              }
+              @if (registerForm.get('userName').hasError('maxlength')){
+                  <div class="invalid-feedback"> UserName must not be more than 50 characters </div>
+              }
+          </div>
+          <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("password").errors && registerForm.get("password").touched'
+                      type="password" class="form-control" formControlName="password" placeholder="Password" >
+              @if (registerForm.get('password').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter Password </div>
+              }
+              @if (registerForm.get('password').hasError('minlength')){
+                  <div class="invalid-feedback"> Password must not be less than 5 characters </div>
+              }
+              @if (registerForm.get('password').hasError('maxlength')){
+                  <div class="invalid-feedback"> Password must not be more than 20 characters </div>
+              }
+          </div>
+          <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("confirmPassword").errors && registerForm.get("confirmPassword").touched'
+                      type="password" class="form-control" formControlName="confirmPassword" placeholder="ConfirmPassword" >
+              @if (registerForm.get('confirmPassword').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter ConfirmPassword </div>
+              }
+              @if (registerForm.get('confirmPassword').hasError('minlength')){
+                  <div class="invalid-feedback"> ConfirmPassword must not be less than 4 characters </div>
+              }
+              @if (registerForm.get('confirmPassword').hasError('maxlength')){
+                  <div class="invalid-feedback"> ConfirmPassword must not be more than 25 characters </div>
+              }
+              @if (registerForm.get('confirmPassword').hasError('PasswordNoMatch')){
+                <div class="invalid-feedback"> Password and ConfirmPassword are not the same </div>
+              }
+          </div>
 
-    <div class="form-group mb-2">
-        <label class="form-label mr-10px" style="margin-right: 10px;">Gender: </label>
-        <label class="radio-inline" style="margin-right: 10px;">
-          <input type="radio" value="male" formControlName="gender"> Male
-        </label>
-        <label class="radio-inline">
-          <input type="radio" value="female" formControlName="gender" class="ml-3"> Female
-        </label>
-      </div>
+          <div class="form-group mb-2">
+              <label class="form-label mr-10px" style="margin-right: 10px;">Gender: </label>
+              <label class="radio-inline" style="margin-right: 10px;">
+                <input type="radio" value="male" formControlName="gender"> Male
+              </label>
+              <label class="radio-inline">
+                <input type="radio" value="female" formControlName="gender" class="ml-3"> Female
+              </label>
+            </div>
 
-    <div class="form-group mb-2">
-      <input [class.is-invalid]='registerForm.get("knownAs").errors && registerForm.get("knownAs").touched'
-             type="text" class="form-control" formControlName="knownAs" placeholder="How To Know">
-              @if (registerForm.get('knownAs').hasError('required')){
-            <div class="invalid-feedback"> Please Enter How To Know</div>
-        }
-      </div>
+          <div class="form-group mb-2">
+            <input [class.is-invalid]='registerForm.get("knownAs").errors && registerForm.get("knownAs").touched'
+                  type="text" class="form-control" formControlName="knownAs" placeholder="How To Know">
+                    @if (registerForm.get('knownAs').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter How To Know</div>
+              }
+            </div>
 
-      <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("age").errors && registerForm.get("age").touched'
-               type="number" class="form-control" formControlName="age" placeholder="Age">
-                @if (registerForm.get('age').hasError('required')){
-            <div class="invalid-feedback"> Please Enter Age </div>
-        }
-      </div>
+            <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("age").errors && registerForm.get("age").touched'
+                    type="number" class="form-control" formControlName="age" placeholder="Age">
+                      @if (registerForm.get('age').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter Age </div>
+              }
+            </div>
 
-      <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("city").errors && registerForm.get("city").touched'
-               type="text" class="form-control" formControlName="city" placeholder="City">
-                @if (registerForm.get('city').hasError('required')){
-            <div class="invalid-feedback"> Please Enter City </div>
-        }
-      </div>
+            <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("city").errors && registerForm.get("city").touched'
+                    type="text" class="form-control" formControlName="city" placeholder="City">
+                      @if (registerForm.get('city').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter City </div>
+              }
+            </div>
 
-      <div class="form-group mb-2">
-        <input [class.is-invalid]='registerForm.get("country").errors && registerForm.get("country").touched'
-               type="text" class="form-control" formControlName="country" placeholder="Country">
-                @if (registerForm.get('country').hasError('required')){
-            <div class="invalid-feedback"> Please Enter Country </div>
-        }
-      </div>
-    <div class="form-group mt-2 d-flex justify-content-center">
-       <button class="btn btn-success" type="submit" [disabled]="registerForm.invalid">Register</button>
-       <button class="btn btn-default ml-10px" type="button" (click)="cancel()">Cancel</button>
-       
-    </div>
-</form>
+            <div class="form-group mb-2">
+              <input [class.is-invalid]='registerForm.get("country").errors && registerForm.get("country").touched'
+                    type="text" class="form-control" formControlName="country" placeholder="Country">
+                      @if (registerForm.get('country').hasError('required')){
+                  <div class="invalid-feedback"> Please Enter Country </div>
+              }
+            </div>
+          <div class="form-group mt-2 d-flex justify-content-center">
+            <button class="btn btn-success" type="submit" [disabled]="registerForm.invalid">Register</button>
+            <button class="btn btn-default ml-10px" type="button" (click)="cancel()">Cancel</button>
+            
+          </div>
+      </form>
     </div>
   </div>
+  </div>
 </div>
+
 
 
 

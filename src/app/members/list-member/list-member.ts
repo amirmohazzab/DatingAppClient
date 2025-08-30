@@ -7,7 +7,6 @@ import { PaginationResult } from '../../DTOs/Pagination';
 import { FormsModule } from '@angular/forms';
 import { Gender, OrderBy, TypeSort, UserParams } from '../../DTOs/UserParams';
 import { PageChangedEvent, PaginationModule } from "ngx-bootstrap/pagination";
-import { UserLikeParams } from '../../enums/likeUser';
 
 @Component({
   selector: 'app-list-member',

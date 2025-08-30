@@ -84,7 +84,7 @@
                 </div>
             </div>
         }
-         @if (result?.items){
+         @if (result?.totalCount > 0){
             <div class="d-flex justify-content-center mt-3">
                 <pagination 
                     (totalItems)="result?.totalCount" 

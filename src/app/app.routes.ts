@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
-import { HomeMessage } from './messages/home-message/home-message';
+import { Message } from './message/message';
 import { HomeList } from './list/home-list/home-list';
 import { DetailMember } from './members/detail-member/detail-member';
 import { NotFound } from './not-found/not-found';
@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path: 'member/edit', component: EditMember,  pathMatch: 'full', canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard]},
     {path: 'member/:username', component: DetailMember,  pathMatch: 'full', canActivate: [AuthGuard]},
     {path: 'list', component: HomeList, canActivate: [AuthGuard]},
-    {path: 'messages', component: HomeMessage, canActivate: [AuthGuard]},
+    {path: 'message', component: Message, canActivate: [AuthGuard]},
     {path: 'not-found', component: NotFound},
     {path: '**', component: NotFound},
 ];

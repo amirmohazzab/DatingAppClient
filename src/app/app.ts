@@ -10,6 +10,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 
+
 @Component({
   selector: 'app-root',
   imports: [

@@ -1,0 +1,70 @@
+<div class="card">
+  <div
+    class="card-body"
+    #scrollMe
+    [scrollTop]="scrollMe.scrollHeight"
+    style="overflow-y: scroll; height: 535px"
+  >
+    <!-- no message thread -->
+    @if (!messages){
+      <div class="alert alert-primary py-4 text-center">
+        No messages yet... say hi by using the message box below
+      </div>
+    }
+    <!-- has message thread -->
+    <ul>
+      @for (message of messages; track $index){
+        <li>
+        <div>
+          <span class="chat-img float-right">
+            <img
+              class="rounded-circle"
+              [src]="message?.senderPhotoUrl"
+              [alt]="message?.senderUserName"
+            />
+          </span>
+          <div class="chat-body">
+            <div class="header">
+              <small class="text-muted">
+                <span>{{ message?.messageSent | timeAgo }}</span>
+                <!-- sender is mySelf -->
+               
+              </small>
+            </div>
+            <p>{{ message?.content }}</p>
+          </div>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <div class="card-footer">
+    <form #messageForm="ngForm" (submit)="onSubmit()" autocomplete="off">
+      <div class="input-group">
+        <input
+          name="messageContent"
+          [(ngModel)]="messageContent"
+          required
+          type="text"
+          class="form-control input-sm"
+          placeholder="Send a private message"
+        />
+        <div class="input-group-append" style="margin-left: 5px">
+          <button
+            [disabled]="messageForm.invalid"
+            class="btn btn-primary"
+            type="submit"
+          >
+            Send
+            @if (loading){
+              <i class="fa fa-spinner fa-spin"></i>
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+

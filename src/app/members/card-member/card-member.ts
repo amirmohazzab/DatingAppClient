@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MemberService } from '../../services/member-service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule} from '@angular/common';
+//import {TimeAgoPipe} from '../../utilities/time-ago-pipe';
 
 @Component({
   selector: 'app-card-member',

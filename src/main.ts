@@ -8,6 +8,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { AuthInterceptor } from './app/interceptors/auth-interceptor';
 import { LoadingInterceptor} from './app/interceptors/loading-interceptor';
+import { TimeAgoPipe } from 'time-ago-pipe';
 //import { appConfig } from './app/app.config';
 //import { importProvidersFrom } from '@angular/core';
 //importProvidersFrom(HttpClientModule),
@@ -29,6 +30,6 @@ bootstrapApplication(App, {
       preventDuplicates: true,
       progressBar: true,
       progressAnimation: 'increasing'
-    })
+    }),
   ]
 }).catch(err => console.error(err));
