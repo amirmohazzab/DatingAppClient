@@ -39,6 +39,7 @@ export class ListMember implements OnInit {
   private loadMembers(){
     this.memberService.getMembers(this.userParams).subscribe(response => {
         this.result = response;
+        console.log(this.result);
     })
   }
 

@@ -1,7 +1,7 @@
 import {PhotoDto} from './PhotoDto';
 
 export interface MemberDTO{
-    userId: number;
+    id: number;
     userName: string;
     email: string;
     photoUrl?: string;

@@ -8,7 +8,7 @@ export interface Pagination{
 export class PaginationResult<T> implements Pagination{
   currentPage: number;
   totalPage: number;
-  pageSize: number = 1;
+  pageSize: number;
   totalCount: number;
   items: T;
 }

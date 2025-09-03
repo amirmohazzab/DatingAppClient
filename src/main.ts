@@ -8,6 +8,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { AuthInterceptor } from './app/interceptors/auth-interceptor';
 import { LoadingInterceptor} from './app/interceptors/loading-interceptor';
+import { BrowserModule } from '@angular/platform-browser';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { TimeAgoPipe } from 'time-ago-pipe';
 //import { appConfig } from './app/app.config';
 //import { importProvidersFrom } from '@angular/core';
@@ -31,5 +33,7 @@ bootstrapApplication(App, {
       progressBar: true,
       progressAnimation: 'increasing'
     }),
+    BsModalService,
+    BrowserModule,
   ]
 }).catch(err => console.error(err));

@@ -1,5 +1,5 @@
 export class UserParams{
-    pageNumber : number = 2;
+    pageNumber : number = 1;
     pageSize : number = 1;
     minAge : number = 18;
     maxAge : number = 85;

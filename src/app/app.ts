@@ -8,6 +8,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {ModalModule} from 'ngx-bootstrap/modal';
+
 
 
 
@@ -22,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule, 
     FormsModule,
     NgxPaginationModule,
+    ModalModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'

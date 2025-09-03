@@ -50,7 +50,7 @@ export class MemberService {
   }
 
   getMemberById(id: number){
-    const member = this.members.find(m => m.userId == id);
+    const member = this.members.find(m => m.id == id);
     if (member !== undefined) return of(member);
 
     return this.http.get<MemberDTO>(`${this.baseUrl}/users/getUserById/${id}`);
@@ -58,7 +58,7 @@ export class MemberService {
 
   updateMember(updateMember: UpdateMemberDTO){
       return this.http.put<MemberDTO>(`${this.baseUrl}/users/UpdateUser`, updateMember).pipe(map(member => {
-        const index = this.members.findIndex(m => m.userId === member.userId);
+        const index = this.members.findIndex(m => m.id === member.id);
         this.members[index] = member;
 
         return member;

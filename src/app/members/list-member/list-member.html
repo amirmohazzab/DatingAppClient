@@ -84,10 +84,10 @@
                 </div>
             </div>
         }
-         @if (result?.totalCount > 0){
+         @if (result?.items){
             <div class="d-flex justify-content-center mt-3">
                 <pagination 
-                    (totalItems)="result?.totalCount" 
+                    (totalItems)="result.items" 
                      [(ngModel)] ="result.currentPage" 
                     (pageChanged)="pageChanged($event)">
                 </pagination>

@@ -5,12 +5,13 @@ import { Router, RouterModule } from '@angular/router';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import { UserDto } from '../DTOs/UserDto';
 import { Observable,  } from 'rxjs';
-import { AsyncPipe} from '@angular/common';
+import { AsyncPipe, CommonModule} from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { HasInRoleDirective} from "../directives/has-in-role.directive";
 
 @Component({
   selector: 'app-nav',
-  imports: [ReactiveFormsModule, RouterModule, BsDropdownModule, AsyncPipe ],
+  imports: [ReactiveFormsModule, RouterModule, BsDropdownModule, AsyncPipe, CommonModule, HasInRoleDirective],
   templateUrl: './nav.html',
   styleUrl: './nav.css'
 })
@@ -19,7 +20,7 @@ export class Nav implements OnInit{
 
   //loggedIn: boolean = false;
   currentUser$: Observable<UserDto>;
- 
+  user: UserDto;
 
   loginForm = new FormGroup({
     userName : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -41,7 +42,7 @@ export class Nav implements OnInit{
     this.accountService.login(this.loginForm.value).subscribe((user: any) => {
       //this.loggedIn = true;
       this.router.navigateByUrl('/members');
-      this.toast.success('Success', 'Login is successfully');
+      this.toast.success('Success', 'Login successful');
       
     })
   };
@@ -58,6 +59,7 @@ export class Nav implements OnInit{
   logout(){
     this.accountService.logout();
     this.router.navigateByUrl('/');
+    this.toast.success('Logout Successful');
     //this.loggedIn = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, forwardRef, Inject, Injector, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account-service';
 import { MemberService } from '../../services/member-service';
 import { UserDto } from '../../DTOs/UserDto';
@@ -8,6 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import { finalize } from 'rxjs';
 import { PhotoEditMember } from '../photo-edit-member/photo-edit-member';
+import { ConfirmService } from '../../services/confirm-service';
+import { IPreventUnsavedChanges } from '../../guards/prevent-unsaved-changes-guard';
 
 @Component({
   selector: 'app-edit-member',
@@ -21,15 +23,31 @@ export class EditMember implements OnInit{
   user: UserDto;
   member: MemberDTO;
   isSubmit: boolean = false;
+  resultSuccess: boolean = false;
 
   editMemberForm : FormGroup;
+  private confirmService: ConfirmService;
 
-  constructor(private accountService: AccountService, private memberService: MemberService, private toast: ToastrService){}
+  constructor(
+    //private injector: Injector,
+    private accountService: AccountService,
+    private memberService: MemberService, 
+    private toast: ToastrService){}
+
+
 
   ngOnInit(): void {
+    //this.confirmService = this.injector.get(ConfirmService)
     this.loadUser();
     this.loadMember();
   }
+
+     canDeactivate(): boolean {
+     if (this.editMemberForm.dirty && !this.resultSuccess) {
+       return confirm('Are you!'); 
+     }
+     return true;
+   }
 
   loadMember(){
     this.memberService.getMemberByUserName(this.user.userName).subscribe(member => {
@@ -67,6 +85,7 @@ export class EditMember implements OnInit{
       console.log(member)
       this.member = member;
       this.toast.success('Update Member Success');
+      this.resultSuccess = true;
    }, error => {
     console.log(error);
    });

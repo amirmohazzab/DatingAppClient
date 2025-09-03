@@ -1,5 +1,4 @@
 export interface UpdateMemberDTO{
-   
     email: string;
     knownAs: string;
     introduction: string;

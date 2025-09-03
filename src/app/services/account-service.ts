@@ -25,8 +25,7 @@ export class AccountService {
           this.serCurrentUser(response);        
       }}))
     
-    }
-
+  }
   
   register(model){
     return this.http.post<UserDto>(`${this.baseUrl}/account/register`, model).pipe(map((response: UserDto ) => {
@@ -44,6 +43,10 @@ export class AccountService {
 
   serCurrentUser(user: UserDto){
     if (user){
+      user.roles = [];
+      const roles = this.getDecodedToken(user.token)?.role;
+      if (roles) 
+        Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
       localStorage.setItem('user', JSON.stringify(user));
       this.currentUser.next(user);
     }
@@ -53,5 +56,9 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUser.next(null);
+  }
+
+  private getDecodedToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }
