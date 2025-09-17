@@ -4,6 +4,7 @@ import { LoginDto } from '../DTOs/LoginDto';
 import { UserDto } from '../DTOs/UserDto';
 import { map, ReplaySubject } from 'rxjs';
 import { RegisterDto } from '../DTOs/RegisterDto';
+import { PresenceService } from './presence-service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,20 +18,20 @@ export class AccountService {
   private currentUser = new ReplaySubject<UserDto>(1);
   currentUser$ = this.currentUser.asObservable();
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private presenceService: PresenceService){}
 
   login(model){
-    return this.http.post<UserDto>(`${this.baseUrl}/account/login`, model).pipe(map((response: UserDto ) => {
-      if (response.token && response.userName){
-          this.serCurrentUser(response);        
+    return this.http.post<UserDto>(`${this.baseUrl}/account/login`, model).pipe(map((user: UserDto ) => {
+      if (user.token && user.userName){
+          this.setCurrentUser(user);     
+          this.presenceService.createHubConnection(user);   
       }}))
-    
   }
   
   register(model){
     return this.http.post<UserDto>(`${this.baseUrl}/account/register`, model).pipe(map((response: UserDto ) => {
       if (response.token && response.userName){
-        this.serCurrentUser(response)
+        this.setCurrentUser(response)
       }
       return response;
     }))
@@ -41,7 +42,7 @@ export class AccountService {
     return this.http.get<boolean>(`${this.baseUrl}/account/isExitUserName/${userName}`,)
   }
 
-  serCurrentUser(user: UserDto){
+  setCurrentUser(user: UserDto){
     if (user){
       user.roles = [];
       const roles = this.getDecodedToken(user.token)?.role;
@@ -56,6 +57,7 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUser.next(null);
+    this.presenceService.stopHubConnection();
   }
 
   private getDecodedToken(token: string){

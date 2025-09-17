@@ -83,7 +83,7 @@ export class PhotoEditMember implements OnInit{
 
   updateUserAndMemberPhotoUrl(photo: PhotoDto){
       this.user.photoUrl = photo.url;
-      this.accountService.serCurrentUser(this.user);
+      this.accountService.setCurrentUser(this.user);
 
       this.member.photoUrl = photo.url;
       this.member.photos.forEach(item => {

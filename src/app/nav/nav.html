@@ -1,47 +1,140 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 10; position: fixed; left: 0; right: 0;">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" style="z-index: 10; position: fixed; left: 0; right: 0;">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Chat App</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" routerLink="/">Chat Room</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
-          <a class="nav-link" routerLink = "/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      <ul
+        class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+        style="--bs-scroll-height: 100px"
+      >
+        <li class="nav-item">
+          <!-- https://localhost:4200/messages -->
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            aria-current="page"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/"
+            >Home</a
+          >
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink = "/members" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Members</a>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            aria-current="page"
+            routerLink="/members"
+            >Users</a
+          >
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink = "/list" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Likes</a>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            aria-current="page"
+            routerLink="/list"
+            >Likes</a
+          >
         </li>
-         <li class="nav-item">
-          <a class="nav-link" routerLink = "/message" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Messages</a>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            aria-current="page"
+            routerLink="/message"
+            >Messages</a
+          >
         </li>
-          <li class="nav-item" *appHasInRole="['admin', 'superAdmin']">
-            <a class="nav-link" routerLink = "/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Admin</a>
-          </li>
-        <li>
-          @if (currentUser$ | async){
-             <li  class="nav-item dropdown" style="z-index: 10; position: fixed; right: 0;">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Welcome User
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" routerLink="/member/edit">Edit Profile</a></li>
-              <li><a class="dropdown-item" (click)="logout()">Logout <span class="fas fa-sign-out-alt"></span></a></li>
-            </ul>
-          </li>
-          }
+         <li class="nav-item" *appHasInRole="['admin']">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            aria-current="page"
+            routerLink="/admin"
+            >Admin Panel</a
+          >
         </li>
       </ul>
-       @if ((currentUser$ | async) === null){
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-flex">
-            <input class="form-control me-2" type="text" formControlName= "userName" placeholder="UserName" aria-label="Search">
-            <input class="form-control me-2" type="password" formControlName = "password" placeholder="Password" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" [disabled]="loginForm.invalid">Login</button>
-        </form>
+      @if (currentUser$ | async; as User){
+        <div
+        class="dropdown mr-10"
+        dropdown
+        placement="bottom left"
+      >
+        <img
+          style="max-width: 40px; margin-right: 5px"
+          class="img-thumbnail p-1 rounded-circle"
+          [src]="User.photoUrl || '../../../../images/user.jpg'"
+          [alt]="User.userName"
+        />
+        <a
+          class="btn btn-secondary dropdown-toggle"
+          role="button"
+          dropdownToggle
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+           Welcome {{ User.userName | lowercase }}
+        </a>
+
+        <ul
+          *dropdownMenu
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuLink"
+        >
+          <li>
+            <a class="dropdown-item" [routerLink]="['/member', 'edit']"
+              >Edit Profile</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="logout()">
+              Exit <span class="fas fa-sign-out-alt"></span
+            ></a>
+          </li>
+        </ul>
+      </div>
+      }
+
+      @if((currentUser$ | async) === null){
+        <form
+        (ngSubmit)="onSubmit()"
+        [formGroup]="loginForm"
+        class="d-flex"
+      >
+        <input
+          type="text"
+          formControlName="userName"
+          class="form-control me-2"
+          placeholder="userName"
+        />
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control me-2"
+          placeholder="password"
+        />
+        <button
+          class="btn btn-outline-success me-2"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          Enter
+        </button>
+      </form>
       }
     </div>
   </div>
 </nav>
+

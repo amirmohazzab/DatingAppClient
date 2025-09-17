@@ -1,6 +1,6 @@
 export class UserParams{
     pageNumber : number = 1;
-    pageSize : number = 1;
+    pageSize : number = 3;
     minAge : number = 18;
     maxAge : number = 85;
     gender : Gender = Gender.male

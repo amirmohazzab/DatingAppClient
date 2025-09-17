@@ -7,6 +7,7 @@ import { PaginationResult } from '../../DTOs/Pagination';
 import { FormsModule } from '@angular/forms';
 import { Gender, OrderBy, TypeSort, UserParams } from '../../DTOs/UserParams';
 import { PageChangedEvent, PaginationModule } from "ngx-bootstrap/pagination";
+import { UserLikeParams } from '../../enums/likeUser';
 
 @Component({
   selector: 'app-list-member',
@@ -21,6 +22,8 @@ export class ListMember implements OnInit {
   genders = Gender;
   orderBy = OrderBy;
   typeSort = TypeSort;
+  userLikeParams = new UserLikeParams();
+  likedUsers: any[] = [];
 
   constructor(private memberService: MemberService){
     this.userParams = this.memberService.getUserParams();
@@ -39,7 +42,6 @@ export class ListMember implements OnInit {
   private loadMembers(){
     this.memberService.getMembers(this.userParams).subscribe(response => {
         this.result = response;
-        console.log(this.result);
     })
   }
 
@@ -48,10 +50,12 @@ export class ListMember implements OnInit {
   }
 
   onClear(){
-    this.userParams = this.memberService.resetUserParams();
+    this.userParams = this.memberService.resetUserParams();   
     this.loadMembers();
   }
-  
 
-
+   onLikeToggled(updatedUser: any) {
+    // می‌تونی اینجا هر کار اضافه‌ای انجام بدی
+     console.log('Like status updated:', updatedUser);
+   }
 }

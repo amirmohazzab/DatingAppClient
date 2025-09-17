@@ -7,6 +7,7 @@ import { PhotoDto } from '../DTOs/PhotoDto';
 import { PaginationResult } from '../DTOs/Pagination';
 import { UserParams } from '../DTOs/UserParams';
 import { PredicateLikeEnum, UserLikeParams } from '../enums/likeUser';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class MemberService {
   private cacheMember = new Map<string, PaginationResult<MemberDTO[]>>();
   private paginationResult: PaginationResult<MemberDTO[]> = new PaginationResult<MemberDTO[]>();
 
-  constructor(private http: HttpClient){}
+
+  constructor(private http: HttpClient, private toast: ToastrService){}
 
   getMembers(userParams: UserParams) : Observable<PaginationResult<MemberDTO[]>>{
     const key = Object.values(userParams).join('-');
@@ -123,6 +125,20 @@ export class MemberService {
     }
     
     return params;
+  }
+
+  removeLike(targetUserName: string): Observable<any> {
+    const params = new HttpParams().set('targetUserName', targetUserName);
+    return this.http.delete(`${this.baseUrl}/UserLikes/remove-like`, { params });
+  }
+
+  isLiked(targetUserName: string): Observable<boolean> {
+    const params = new HttpParams().set('targetUserName', targetUserName);
+    return this.http.get<boolean>(`${this.baseUrl}/UserLikes/is-liked`, { params });
+}
+
+  getLikesCount(targetUserName: string): Observable<any> {
+    return this.http.get<number>(`${this.baseUrl}/UserLikes/${targetUserName}/count`);
   }
 
 }

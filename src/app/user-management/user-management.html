@@ -4,13 +4,13 @@
       <thead>
         <th>userName</th>
         <th>Active Roles</th>
-        <th>#</th>
+        <th></th>
       </thead>
       <tbody>
         @for (user of users; track $index){
             <tr>
                 <td>{{ user.userName }}</td>
-                <td class="fw-bold">{{ user?.roles }}</td>
+                <td>{{ user?.roles }}</td>
                 <td>
                     <button class="btn btn-sm btn-primary" (click)="onEditModal(user)">
                     Edit Role

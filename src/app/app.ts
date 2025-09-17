@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {ModalModule} from 'ngx-bootstrap/modal';
+import { PresenceService } from './services/presence-service';
 
 
 
@@ -33,7 +34,7 @@ export class App implements OnInit{
   protected title = 'DatingAppClient';
   users: any;
 
-  constructor(private accountService: AccountService){}
+  constructor(private accountService: AccountService, private presenceService: PresenceService){}
 
   ngOnInit(): void {
     //this.getUsers();
@@ -43,8 +44,14 @@ export class App implements OnInit{
 
   setCurrentUser(){
     const user: UserDto = JSON.parse(localStorage.getItem('user'));
-    
-    user ? this.accountService.serCurrentUser(user) : this.accountService.serCurrentUser(null)
+    if (user){
+      this.accountService.setCurrentUser(user);
+      this.presenceService.createHubConnection(user);
+
+    } else {
+      this.accountService.setCurrentUser(null);
+      this.presenceService.stopHubConnection();
+    }
   }
 
 }

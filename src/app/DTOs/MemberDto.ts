@@ -16,4 +16,5 @@ export interface MemberDTO{
     city: string;
     country: string;
     photos?: PhotoDto[];
+    liked: boolean;
 }

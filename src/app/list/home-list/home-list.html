@@ -1,9 +1,9 @@
-<div class="py-3" style="height:100vh; background-color:lightsteelblue">
+<div class="py-2" style="height:100vh; background-color:lightsteelblue">
     <div class="album py-5" style="background-color:lightsteelblue">
-     @if (result){
+            @if (result?.items?.length !== 0){
                 <div class="container">
                     <div class="row align-items-center">
-                        @for (member of result.items; track $index){
+                        @for (member of result?.items; track $index){
                             <div class="col-md-4">
                             <app-card-member [member]="member"></app-card-member>
                         </div>
@@ -15,7 +15,7 @@
                     No Items To Show
                 </div>
             }
-            @if (result){
+            @if (result?.items){
                 <div class="d-flex justify-content-center mt-3">
                     <pagination 
                         (totalItems)="result?.totalCount" 

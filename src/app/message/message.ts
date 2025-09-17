@@ -46,6 +46,7 @@ export class Message implements OnInit{
     this.loading = true;
     this.messageService.getMessages(this.messageParams).pipe(finalize(() => {this.loading = false})).subscribe(response => {
         this.result = response;
+        console.log(this.result);
     })
   }
 

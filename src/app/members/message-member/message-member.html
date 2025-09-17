@@ -6,29 +6,44 @@
     style="overflow-y: scroll; height: 535px"
   >
     <!-- no message thread -->
-    @if (!messages){
+    
+    @if ((messageService.messageThreadSource$ | async)?.length === 0){
       <div class="alert alert-primary py-4 text-center">
         No messages yet... say hi by using the message box below
       </div>
     }
     <!-- has message thread -->
-    <ul>
+    @if (messageService.messageThreadSource$ | async; as messages){
+      <ul class="chat">
       @for (message of messages; track $index){
         <li>
         <div>
           <span class="chat-img float-right">
-            <img
+            <div class="d-flex">
+              <img
               class="rounded-circle"
-              [src]="message?.senderPhotoUrl"
-              [alt]="message?.senderUserName"
+              [src]="message.senderUserName === currentUser.userName
+                      ? currentUser.photoUrl
+                      : (message.senderUserName === member.userName ? member.photoUrl : 'assets/default-user.jpg')"
             />
+            <p>{{message.senderUserName}}</p>
+            </div>
           </span>
           <div class="chat-body">
             <div class="header">
               <small class="text-muted">
                 <span>{{ message?.messageSent | timeAgo }}</span>
                 <!-- sender is mySelf -->
-               
+                @if (!message.dateRead && message.senderUserName !== userName){
+                  <span class="text-danger">
+                    (unread)
+                  </span>
+                }
+                @if (message.dateRead && message.senderUserName !== userName){
+                  <span class="text-success">
+                    (read {{ message.dateRead | timeAgo }})
+                  </span>
+                }
               </small>
             </div>
             <p>{{ message?.content }}</p>
@@ -37,6 +52,7 @@
       </li>
       }
     </ul>
+    }
   </div>
 
   <div class="card-footer">
